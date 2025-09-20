@@ -1,4 +1,43 @@
 # 404-Brainpower
+# Inglish
+
+# What's the problem?
+
+The problem is that free taxis lose customers because the only payment method is cash, so they are at a disadvantage compared to external transport applications that allow you to pay by card.
+
+# What technology will be used?
+
+- PHP, MySQL, JavaScript for back-end and front-end, and HTML and CSS for front-end.
+
+JavaScript was used to make AJAX requests to PHP files.
+
+# What is the solution?
+
+We chose to develop it on a website, since it allows you to manage payments and security from any device with a browser, concentrating transactions, history and portfolio management on a centralized platform, which increases the reliability, maintenance and scalability of the system.
+
+# What are the benefits?
+
+The benefits of the website will be the growth towards new technologies, since setbacks with online payments will be avoided thanks to Open Payments. This option is practical for users who do not have cash and need to resort to another payment method.
+
+# What is your simple architecture?
+
+In the architecture, languages such as PHP, MySQL, CSS, JavaScript and HTML were used, without using any type of external libraries. Only in terms of design were Bootstrap and Tailwind CSS used. Databases were used to store the information of users and taxi drivers, this being a SQL database. The project was executed in a domain.
+
+# What functions are indispensable?
+
+The indispensable functions for the functionality of the service are the logins of users and taxi drivers, and the payment display platform of both.
+
+# Who will be responsible for building which part?
+
+- Fabio generated the registro.php file with the same content that the emails should carry.
+
+- Isaac will be in charge of testing the Open Payments API.
+
+- Eduardo, of the creation of the database and the implementation of the Open Payments API.
+
+- Sofia was in charge of generating the digital wallets that were used in the program.
+
+# Español
 
 # ¿Cuál es el problema?
 El problema es que los taxis libres pierden clientela porque el único método de pago es en efectivo, por lo que están en desventaja frente a las aplicaciones de transporte externas que permiten pagar con tarjeta.
@@ -24,4 +63,3 @@ Las funciones indispensables para la funcionalidad del servicio son los inicios 
 - Isaac se encargará de probar la API de Open Payments.
 - Eduardo, de la creación de la base de datos y de la implementación de la API de Open Payments.
 - Sofía se encargó de generar las wallets digitales que se usaron en el programa.
-  
