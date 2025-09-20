@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (curpExists($curp)) {
             $error = "El CURP ya está registrado en el sistema";
         } elseif (!empty($wallet_input) && $wallet === null) {
-            $error = "La URL de la wallet no es válida. Debe ser del formato: https://ilp.interledger-test.dev/tu_usuario";
+            $error = "La URL de la wallet no es válida. Debe ser del formato: https://ilp.interledger-test.dev/testeduardo_1";
         } else {
             $data = [
                 'nombre' => $nombre,
@@ -134,7 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (registerUser($data, $user_type == 'taxista')) {
                 $_SESSION['message'] = "Cuenta creada correctamente.";
                 $_SESSION['message_type'] = 'success';
-                header("Location: login.php");
+                header("Location: index.html");
                 exit();
             } else {
                 $error = "Error al registrar el usuario";
@@ -405,7 +405,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <!-- Updated wallet field to be optional and accept URL -->
                 <label for="wallet">Wallet Interledger (opcional)</label>
                 <input type="text" class="form-control" id="wallet" name="wallet" 
-                       placeholder="https://ilp.interledger-test.dev/tu_usuario">
+                       placeholder="https://ilp.interledger-test.dev/testeduardo_1">
                 <div class="password-strength">Opcional: URL completa de tu wallet Interledger</div>
             </div>
             
@@ -444,7 +444,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </form>
         
         <div class="login-link">
-            ¿Ya tienes cuenta? <a href="login.php">Inicia sesión aquí</a>
+            ¿Ya tienes cuenta? <a href="index.html">Inicia sesión aquí</a>
         </div>
     </div>
 
@@ -504,7 +504,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         document.getElementById('wallet').addEventListener('input', function() {
             const walletUrl = this.value.trim();
             if (walletUrl && !walletUrl.includes('ilp.interledger-test.dev/')) {
-                this.setCustomValidity('Debe ser una URL válida de Interledger: https://ilp.interledger-test.dev/tu_usuario');
+                this.setCustomValidity('Debe ser una URL válida de Interledger: https://ilp.interledger-test.dev/testeduardo_1');
             } else {
                 this.setCustomValidity('');
             }
