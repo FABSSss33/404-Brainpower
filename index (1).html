@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaxiPay - Servicio de Taxis 24/7</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+    <script src="https://unpkg.com/feather-icons"></script>
+    <style>
+        .hero-bg {
+            background-image: linear-gradient(rgba(12, 29, 44, 0.7), rgba(12, 29, 44, 0.7)), url('http://static.photos/cityscape/1200x630/42');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .taxi-icon {
+            transition: all 0.3s ease;
+        }
+
+        .taxi-icon:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Colores personalizados */
+        .bg-primary { background-color: #0c1d2c; }
+        .bg-secondary { background-color: #42aab1; }
+        .bg-accent { background-color: #217277; }
+        .bg-accent2 { background-color: #1c839f; }
+        .bg-accent3 { background-color: #0c4f6c; }
+        .bg-accent4 { background-color: #0c4953; }
+        .bg-accent5 { background-color: #3e947c; }
+        .bg-accent6 { background-color: #5c8888; }
+        
+        .text-primary { color: #0c1d2c; }
+        .text-secondary { color: #42aab1; }
+        .text-accent { color: #217277; }
+        .text-accent2 { color: #1c839f; }
+        .text-accent3 { color: #0c4f6c; }
+        .text-accent4 { color: #0c4953; }
+        .text-accent5 { color: #3e947c; }
+        .text-accent6 { color: #5c8888; }
+        
+        .border-primary { border-color: #0c1d2c; }
+        .border-secondary { border-color: #42aab1; }
+        .border-accent { border-color: #217277; }
+        
+        .hover\:bg-secondary:hover { background-color: #42aab1; }
+        .hover\:bg-accent:hover { background-color: #217277; }
+        .hover\:bg-accent2:hover { background-color: #1c839f; }
+        
+        .hover\:text-secondary:hover { color: #42aab1; }
+        .hover\:text-accent:hover { color: #217277; }
+        
+        .focus\:ring-accent:focus { --tw-ring-color: #217277; }
+        
+        .login-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(12, 29, 44, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .login-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .language-options {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 120px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+            z-index: 1;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .language-options a {
+            display: block;
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #0c1d2c;
+        }
+        
+        .language-options a:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-gray-100">
+    <!-- Navbar -->
+    <nav class="bg-primary shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <a href="#" class="flex items-center py-4 px-2">
+                            <i data-feather="navigation" class="text-secondary mr-2"></i>
+                            <span class="font-semibold text-white text-lg">TaxiPay</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#" class="py-4 px-2 text-white font-semibold border-b-4 border-secondary">Inicio</a>
+                    <a href="#tarifas"
+                        class="py-4 px-2 text-white font-semibold hover:border-b-4 border-secondary transition duration-300">Licencias</a>
+                    <a href="#contacto"
+                        class="py-4 px-2 text-white font-semibold hover:border-b-4 border-secondary transition duration-300">Contacto</a>
+                </div>
+                <div class="flex items-center space-x-3">
+                    <div class="language-selector">
+                        <button onclick="toggleLanguageOptions()" class="flex items-center text-white focus:outline-none">
+                            <i data-feather="globe" class="mr-1"></i> <span id="current-lang">ES</span>
+                        </button>
+                        <div id="languageOptions" class="language-options">
+                            <a href="#" onclick="changeLanguage('es'); return false;">Español</a>
+                            <a href="#" onclick="changeLanguage('en'); return false;">English</a>
+                        </div>
+                    </div>
+                    <button onclick="openLoginModal()" class="bg-secondary hover:bg-accent text-white font-bold py-2 px-4 rounded-lg transition duration-300">
+                        <i data-feather="user" class="inline mr-1"></i> <span data-translate="login">Iniciar Sesión</span>
+                    </button>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button class="outline-none mobile-menu-button">
+                        <i data-feather="menu" class="text-white"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden mobile-menu bg-primary">
+            <ul>
+                <li class="active"><a href="#"
+                        class="block text-sm px-2 py-4 text-white bg-accent3 font-semibold" data-translate="home">Inicio</a></li>
+                
+                <li><a href="#tarifas"
+                        class="block text-sm px-2 py-4 hover:bg-accent3 transition duration-300 text-white" data-translate="rates">Licencias</a>
+                </li>
+                <li><a href="#contacto"
+                        class="block text-sm px-2 py-4 hover:bg-accent3 transition duration-300 text-white" data-translate="contact">Contacto</a>
+                </li>
+                <li><a href="#" onclick="openLoginModal()"
+                        class="block text-sm px-2 py-4 hover:bg-accent3 transition duration-300 text-white" data-translate="login">Iniciar Sesión</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="login-modal">
+        <div class="login-content">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-2xl font-bold text-primary" data-translate="login">Iniciar Sesión</h3>
+                <button onclick="closeLoginModal()" class="text-gray-500 hover:text-gray-700">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+            <form action="validacion.php" method="post">
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 mb-2" data-translate="email">Correo Electrónico</label>
+                    <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                </div>
+                <div class="mb-6">
+                    <label for="password" class="block text-gray-700 mb-2" data-translate="password">Contraseña</label>
+                    <input type="password" id="password" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                </div>
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="remember" class="mr-2">
+                        <label for="remember" class="text-gray-700" data-translate="remember">Recordarme</label>
+                    </div>
+                    <a href="#" class="text-accent2 hover:text-accent" data-translate="forgot">¿Olvidaste tu contraseña?</a>
+                </div>
+                <button type="submit" class="w-full bg-secondary hover:bg-accent text-white font-bold py-2 px-4 rounded-lg transition duration-300" data-translate="login-button">
+                    Ingresar
+                </button>
+            </form>
+            <div class="google-login">
+            <div id="g_id_onload"
+                data-client_id="919662726760-0baq30mfmsmj3e50qovupho5q92eaghb.apps.googleusercontent.com"
+                data-callback="handleCredentialResponse" data-auto_prompt="false">
+            </div>
+            <div class="g_id_signin" data-type="standard" data-size="large" data-theme="filled_blue"></div>
+        </div>
+            <div class="mt-4 text-center">
+                <p class="text-gray-600" data-translate="no-account">¿No tienes una cuenta?</p> <a href="#" class="text-accent2 hover:text-accent" data-translate="register">Regístrate</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-bg text-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl font-bold mb-6" data-aos="fade-down" data-translate="hero-title">Servicio de Taxis 24/7</h1>
+            <p class="text-xl mb-8" data-aos="fade-down" data-aos-delay="100" data-translate="hero-subtitle">Llegamos a donde necesites, cuando lo necesites</p>
+            <button class="bg-secondary hover:bg-accent text-white font-bold py-3 px-6 rounded-full transition duration-300 transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+                <i data-feather="phone" class="inline mr-2"></i> <span data-translate="call-now">Llamar ahora</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Tarifas Section -->
+    <section id="tarifas" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-primary mb-12" data-aos="fade-up" data-translate="rates-title">Nuestras Licencias</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="text-center py-4">
+                        <h3 class="text-xl font-semibold mb-2" data-translate="basic-plan">Básico - 3 Meses</h3>
+                        <p class="text-gray-600 mb-4" data-translate="basic-desc">Para trayectos cortos</p>
+                        <p class="text-3xl font-bold text-accent2 mb-4">$126.65 MXN</p>
+                        <p class="text-3xl font-bold text-accent2 mb-4">$6.87 USD</p>
+                        <p class="text-gray-600" data-translate="initial-rate">Tarifa inicial</p>
+                    </div>
+                    <ul class="mb-8">
+                        <li class="py-2 border-b border-gray-200">
+                            <i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="rate-per-km">$1.27 por km</span></li>
+                        <li class="py-2 border-b border-gray-200">
+                            <i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="waiting-rate">$0.50 por minuto de espera</span>
+                        </li>
+                        <li class="py-2"><i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="no-hidden">Sin cargos ocultos</span></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg transform scale-105" data-aos="fade-up"
+                    data-aos-delay="200">
+                    <div class="bg-secondary text-white text-center py-2 rounded-t-lg -mt-6 mx-6 mb-4">
+                        <p class="font-semibold" data-translate="popular">Popular</p>
+                    </div>
+                    <div class="text-center py-4">
+                        <h3 class="text-xl font-semibold mb-2" data-translate="standard-plan">Estándar - 6 Meses</h3>
+                        <p class="text-gray-600 mb-4" data-translate="standard-desc">Para la mayoría de viajes</p>
+                        <p class="text-3xl font-bold text-accent2 mb-4">$246.65 MXN</p>
+                        <p class="text-3xl font-bold text-accent2 mb-4">$13.39 USD</p>
+                        <p class="text-gray-600" data-translate="initial-rate">Tarifa inicial</p>
+                    </div>
+                    <ul class="mb-8">
+                        <li class="py-2 border-b border-gray-200">
+                            <i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="rate-per-km2">$2.47 por km</span></li>
+                        <li class="py-2 border-b border-gray-200">
+                            <i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="waiting-rate2">$0.40 por minuto de espera</span>
+                        </li>
+                        <li class="py-2"><i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="no-hidden">Sin cargos ocultos</span></li>
+                    </ul>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <div class="text-center py-4">
+                        <h3 class="text-xl font-semibold mb-2" data-translate="premium-plan">Premium - 12 Meses</h3>
+                        <p class="text-gray-600 mb-4" data-translate="premium-desc">Viaje con estilo</p>
+                        <p class="text-3xl font-bold text-accent2 mb-4">$480.00 MXN</p>
+                        <p class="text-3xl font-bold text-accent2 mb-4">$26.50 USD</p>
+                        <p class="text-gray-600" data-translate="initial-rate">Tarifa inicial</p>
+                    </div>
+                    <ul class="mb-8">
+                        <li class="py-2 border-b border-gray-200">
+                            <i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="rate-per-km3">$4.8 por km</span></li>
+                        <li class="py-2 border-b border-gray-200">
+                            <i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="waiting-rate3">$0.30 por minuto de espera</span>
+                        </li>
+                        <li class="py-2"><i data-feather="check" class="text-accent5 inline mr-2"></i> <span data-translate="no-hidden">Sin cargos ocultos</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contacto Section -->
+    <section id="contacto" class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-primary mb-12" data-aos="fade-up" data-translate="contact-title">Contacto</h2>
+            <div class="grid md:grid-cols-2 gap-12">
+                <div data-aos="fade-right">
+                    <h3 class="text-xl font-semibold mb-4" data-translate="contact-info">Información de contacto</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i data-feather="phone" class="text-accent2 mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="font-medium" data-translate="phone">Teléfono</h4>
+                                <p class="text-gray-600">+1 234 567 890</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-feather="mail" class="text-accent2 mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="font-medium">Email</h4>
+                                <p class="text-gray-600">contacto@taxipay.com.mx</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i data-feather="map-pin" class="text-accent2 mr-4 mt-1"></i>
+                            <div>
+                                <h4 class="font-medium" data-translate="address">Dirección</h4>
+                                <p class="text-gray-600" data-translate="address-detail">Calle Principal 123, Ciudad</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-aos="fade-left">
+                    <h3 class="text-xl font-semibold mb-4" data-translate="send-message">Envíanos un mensaje</h3>
+                    <form class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 mb-2" data-translate="name">Nombre</label>
+                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                        </div>
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-2" data-translate="email">Email</label>
+                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-2" data-translate="message">Mensaje</label>
+                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent"></textarea>
+                        </div>
+                        <button type="submit" class="bg-secondary hover:bg-accent text-white font-bold py-2 px-6 rounded-lg transition duration-300" data-translate="send-button">
+                            Enviar Mensaje
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-8">
+        <div class="container mx-auto px-6">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">TaxiPay</h3>
+                    <p class="text-gray-400" data-translate="footer-desc">El servicio de taxis más confiable de la ciudad. Llegamos a donde necesites, cuando lo necesites.</p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4" data-translate="quick-links">Enlaces Rápidos</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-secondary transition duration-300" data-translate="home">Inicio</a></li>
+                        <li><a href="#tarifas"
+                                class="text-gray-400 hover:text-secondary transition duration-300" data-translate="rates">Tarifas</a></li>
+                        <li><a href="#contacto"
+                                class="text-gray-400 hover:text-secondary transition duration-300" data-translate="contact">Contacto</a></li>
+                        <li><a href="#" onclick="openLoginModal()"
+                                class="text-gray-400 hover:text-secondary transition duration-300" data-translate="login">Iniciar Sesión</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-semibold mb-4" data-translate="follow-us">Síguenos</h3>
+                    <div class="flex space-x-4">
+                        <a href="#"
+                            class="text-gray-400 hover:text-secondary transition duration-300"><i data-feather="facebook"></i></a>
+                        <a href="#"
+                            class="text-gray-400 hover:text-secondary transition duration-300"><i data-feather="twitter"></i></a>
+                        <a href="#"
+                            class="text-gray-400 hover:text-secondary transition duration-300"><i data-feather="instagram"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-accent3 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 TaxiPay. <span data-translate="rights">Todos los derechos reservados.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const btn = document.querySelector(".mobile-menu-button");
+        const menu = document.querySelector(".mobile-menu");
+
+        btn.addEventListener("click", () => {
+            menu.classList.toggle("hidden");
+        });
+
+        // Login modal functions
+        function openLoginModal() {
+            document.getElementById('loginModal').style.display = 'flex';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+        }
+
+        // Language selector functions
+        function toggleLanguageOptions() {
+            const options = document.getElementById('languageOptions');
+            options.style.display = options.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Textos en diferentes idiomas
+        const translations = {
+            'es': {
+                'current-lang': 'ES',
+                'login': 'Iniciar Sesión',
+                'home': 'Inicio',
+                'rates': 'Licencias',
+                'contact': 'Contacto',
+                'email': 'Correo Electrónico',
+                'password': 'Contraseña',
+                'remember': 'Recordarme',
+                'forgot': '¿Olvidaste tu contraseña?',
+                'login-button': 'Ingresar',
+                'no-account': '¿No tienes una cuenta?',
+                'register': 'Regístrate',
+                'hero-title': 'Servicio de Taxis 24/7',
+                'hero-subtitle': 'Llegamos a donde necesites, cuando lo necesites',
+                'call-now': 'Llamar ahora',
+                'rates-title': 'Nuestras Licencias',
+                'basic-plan': 'Básico - 3 Meses',
+                'basic-desc': 'Para trayectos cortos',
+                'initial-rate': 'Tarifa inicial',
+                'rate-per-km': '$1.27 por km',
+                'waiting-rate': '$0.50 por minuto de espera',
+                'no-hidden': 'Sin cargos ocultos',
+                'popular': 'Popular',
+                'standard-plan': 'Estándar - 6 Meses',
+                'standard-desc': 'Para la mayoría de viajes',
+                'rate-per-km2': '$2.47 por km',
+                'waiting-rate2': '$0.40 por minuto de espera',
+                'premium-plan': 'Premium - 12 Meses',
+                'premium-desc': 'Viaje con estilo',
+                'rate-per-km3': '$4.8 por km',
+                'waiting-rate3': '$0.30 por minuto de espera',
+                'contact-title': 'Contacto',
+                'contact-info': 'Información de contacto',
+                'phone': 'Teléfono',
+                'address': 'Dirección',
+                'address-detail': 'Calle Principal 123, Ciudad',
+                'send-message': 'Envíanos un mensaje',
+                'name': 'Nombre',
+                'message': 'Mensaje',
+                'send-button': 'Enviar Mensaje',
+                'footer-desc': 'El servicio de taxis más confiable de la ciudad. Llegamos a donde necesites, cuando lo necesites.',
+                'quick-links': 'Enlaces Rápidos',
+                'follow-us': 'Síguenos',
+                'rights': 'Todos los derechos reservados.'
+            },
+            'en': {
+                'current-lang': 'EN',
+                'login': 'Log In',
+                'home': 'Home',
+                'rates': 'Licenses',
+                'contact': 'Contact',
+                'email': 'Email',
+                'password': 'Password',
+                'remember': 'Remember me',
+                'forgot': 'Forgot your password?',
+                'login-button': 'Log In',
+                'no-account': 'Don\'t have an account?',
+                'register': 'Register',
+                'hero-title': '24/7 Taxi Service',
+                'hero-subtitle': 'We get you where you need to go, when you need it',
+                'call-now': 'Call now',
+                'rates-title': 'Our Licenses',
+                'basic-plan': 'Basic - 3 Months',
+                'basic-desc': 'For short trips',
+                'initial-rate': 'Initial rate',
+                'rate-per-km': '$1.27 per km',
+                'waiting-rate': '$0.50 per waiting minute',
+                'no-hidden': 'No hidden fees',
+                'popular': 'Popular',
+                'standard-plan': 'Standard - 6 Months',
+                'standard-desc': 'For most trips',
+                'rate-per-km2': '$2.47 per km',
+                'waiting-rate2': '$0.40 per waiting minute',
+                'premium-plan': 'Premium - 12 Months',
+                'premium-desc': 'Travel in style',
+                'rate-per-km3': '$4.8 per km',
+                'waiting-rate3': '$0.30 per waiting minute',
+                'contact-title': 'Contact',
+                'contact-info': 'Contact information',
+                'phone': 'Phone',
+                'address': 'Address',
+                'address-detail': 'Main Street 123, City',
+                'send-message': 'Send us a message',
+                'name': 'Name',
+                'message': 'Message',
+                'send-button': 'Send Message',
+                'footer-desc': 'The most reliable taxi service in the city. We get you where you need to go, when you need it.',
+                'quick-links': 'Quick Links',
+                'follow-us': 'Follow us',
+                'rights': 'All rights reserved.'
+            }
+        };
+
+        function changeLanguage(lang) {
+            // Actualizar el texto del botón de idioma
+            document.getElementById('current-lang').textContent = translations[lang]['current-lang'];
+            
+            // Actualizar todos los textos con atributo data-translate
+            const elements = document.querySelectorAll('[data-translate]');
+            elements.forEach(element => {
+                const key = element.getAttribute('data-translate');
+                if (translations[lang][key]) {
+                    element.textContent = translations[lang][key];
+                }
+            });
+            
+            // Ocultar el menú de idiomas
+            document.getElementById('languageOptions').style.display = 'none';
+            
+            // Reemplazar iconos de feather
+            feather.replace();
+        }
+
+        // Cerrar el selector de idioma al hacer clic fuera de él
+        window.onclick = function(event) {
+            if (!event.target.matches('.language-selector button') && 
+                !event.target.closest('.language-selector button')) {
+                const options = document.getElementById('languageOptions');
+                if (options.style.display === 'block') {
+                    options.style.display = 'none';
+                }
+            }
+        }
+
+        // Initialize AOS and Feather Icons
+        document.addEventListener('DOMContentLoaded', function() {
+            AOS.init({
+                duration: 800,
+                easing: 'ease-in-out',
+                once: true
+            });
+            feather.replace();
+        });
+    </script>
+</body>
+</html>
