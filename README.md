@@ -8,9 +8,7 @@ The problem is that free taxis lose customers because the only payment method is
 
 # What technology will be used?
 
-- PHP, MySQL, JavaScript for back-end and front-end, and HTML and CSS for front-end.
-
-- JavaScript was used to make AJAX requests to PHP files.
+- PHP, MySQL, JavaScript for back-end and front-end, and HTML and CSS for front-end. JavaScript was used to make AJAX requests to PHP files.
 
 # What is the solution?
 
