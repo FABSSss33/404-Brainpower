@@ -1,4 +1,4 @@
-<em> # 404 Brainpower </em>
+<em> 404 Brainpower </em>
 # English
 
 # What's the problem?
