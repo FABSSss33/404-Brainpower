@@ -1,6 +1,6 @@
 <h1 align="center"> 404 Brainpower </h1>
 
-# English
+# English 🇺🇸
 
 # What's the problem?
 
@@ -38,7 +38,7 @@ The indispensable functions for the functionality of the service are the logins 
 
 - Sofia was in charge of generating the digital wallets that were used in the program.
 
-# Español
+# Español 🇲🇽
 
 # ¿Cuál es el problema?
 El problema es que los taxis libres pierden clientela porque el único método de pago es en efectivo, por lo que están en desventaja frente a las aplicaciones de transporte externas que permiten pagar con tarjeta.
