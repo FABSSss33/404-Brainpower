@@ -1,5 +1,5 @@
 # 404-Brainpower
-# Inglish
+# English
 
 # What's the problem?
 
